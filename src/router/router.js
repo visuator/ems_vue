@@ -9,6 +9,7 @@ import ClassVersionPage from '../views/ClassVersionPage.vue';
 import IdlePeriodPage from '../views/IdlePeriodPage.vue';
 import SettingPage from '../views/SettingPage.vue';
 import LkPage from '../views/LkPage.vue';
+import GroupPage from '../views/GroupPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,11 @@ const router = createRouter({
         },
         {
           path: 'lk', component: LkPage, meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: 'group', component: GroupPage, meta: {
             requiresAuth: true
           }
         },
