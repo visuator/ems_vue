@@ -1,0 +1,2 @@
+const IMPORT_TYPES = [{ id: 1, name: 'Периоды проведения занятий', url: 'import/classPeriods' }, { id: 2, name: 'Аудитории', url: 'import/classrooms' }, { id: 3, name: 'Расписание', url: 'import/classVersion', systemName: 'classVersion' }, { id: 4, name: 'Группы', url: 'import/groups', systemName: 'groups' }, { id: 5, name: 'Преподаватели', url: 'import/lecturers' }, { id: 6, name: 'Предметы', url: 'import/lessons' }, { id: 7, name: 'Студенты', url: 'import/students' } ];
+export { IMPORT_TYPES }
