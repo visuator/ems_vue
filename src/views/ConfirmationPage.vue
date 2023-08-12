@@ -3,6 +3,7 @@ import router from '../router/router'
 import toast from '../modules/toast'
 import axios from '../modules/axios'
 import { onMounted, computed } from 'vue'
+import { useUserStore } from '../stores/userStore';
 
 const confirmationToken = computed(() => router.currentRoute.value.query.confirmationToken);
 onMounted(async () => {
@@ -10,7 +11,12 @@ onMounted(async () => {
         confirmationToken: confirmationToken.value,
         requestedAt: new Date(Date.now()).toJSON(),
     }).then(val => {
-        router.push('/');
+        const userStore = useUserStore();
+
+        if (userStore.isLoggedIn) {
+            userStore.cleanup();
+        }
+        router.push('/login');
         toast.success('Аккаунт подтвержден');
         return val;
     });

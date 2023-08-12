@@ -29,8 +29,32 @@ export const useUserStore = defineStore('user', () => {
     return roles.value ?? localStorageRoles;
   });
 
+  const cleanup = () => {
+    accessToken.value = null;
+    refreshToken.value = null;
+    expiresAt.value = null;
+    roles.value = null;
+
+    localStorage.removeItem(EMS_ACCESS_TOKEN);
+    localStorage.removeItem(EMS_REFRESH_TOKEN);
+    localStorage.removeItem(EMS_EXPIRES_AT);
+    localStorage.removeItem(EMS_ROLES);
+  };
+
+  const set = (accessTokenVal, refreshTokenVal, expiresAtVal, rolesVal) => {
+    accessToken.value = accessTokenVal;
+    refreshToken.value = refreshTokenVal;
+    expiresAt.value = expiresAtVal;
+    roles.value = rolesVal;
+
+    localStorage.setItem(EMS_ACCESS_TOKEN, accessTokenVal);
+    localStorage.setItem(EMS_REFRESH_TOKEN, refreshTokenVal);
+    localStorage.setItem(EMS_EXPIRES_AT, expiresAtVal);
+    localStorage.setItem(EMS_ROLES, JSON.stringify(rolesVal));
+  };
+
   const isLoggedIn = computed(() => getAccessToken.value ? true : false);
   const hasAuthenticatedUser = computed(() => user.value ? true : false);
 
-  return { accessToken, refreshToken, roles, expiresAt, user, getAccessToken, getRefreshToken, getExpiresAt, getRoles, isLoggedIn, hasAuthenticatedUser };
+  return { cleanup, set, accessToken, refreshToken, roles, expiresAt, user, getAccessToken, getRefreshToken, getExpiresAt, getRoles, isLoggedIn, hasAuthenticatedUser };
 });

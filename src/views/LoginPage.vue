@@ -3,7 +3,6 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { ref } from 'vue'
 import { string } from 'yup'
 import { useUserStore } from '../stores/userStore'
-import { EMS_ACCESS_TOKEN, EMS_REFRESH_TOKEN, EMS_ROLES, EMS_EXPIRES_AT } from '../constants/auth'
 import axios from '../modules/axios'
 import toast from '../modules/toast'
 import router from '../router/router'
@@ -51,16 +50,7 @@ const handleLogin = async () => {
         requestedAt: new Date(Date.now()).toJSON(),
     }).then(val => {
         const userStore = useUserStore();
-        userStore.accessToken = val.data.accessToken;
-        userStore.roles = val.data.roles;
-        userStore.refreshToken = val.data.refreshToken;
-        userStore.expiresAt = val.data.expiresAt;
-
-        localStorage.setItem(EMS_ACCESS_TOKEN, val.data.accessToken);
-        localStorage.setItem(EMS_REFRESH_TOKEN, val.data.refreshToken);
-        localStorage.setItem(EMS_EXPIRES_AT, val.data.expiresAt);
-        localStorage.setItem(EMS_ROLES, JSON.stringify(val.data.roles));
-
+        userStore.set(val.data.accessToken, val.data.refreshToken, val.data.expiresAt, val.data.roles);
         toast.success('Успешная авторизация');
         router.push('/');
     }, error => {
@@ -79,16 +69,7 @@ const googleCallback = async (e) => {
         credential: e.credential,
     }).then(val => {
         const userStore = useUserStore();
-        userStore.accessToken = val.data.accessToken;
-        userStore.roles = val.data.roles;
-        userStore.refreshToken = val.data.refreshToken;
-        userStore.expiresAt = val.data.expiresAt;
-
-        localStorage.setItem(EMS_ACCESS_TOKEN, val.data.accessToken);
-        localStorage.setItem(EMS_REFRESH_TOKEN, val.data.refreshToken);
-        localStorage.setItem(EMS_EXPIRES_AT, val.data.expiresAt);
-        localStorage.setItem(EMS_ROLES, JSON.stringify(val.data.roles));
-
+        userStore.set(val.data.accessToken, val.data.refreshToken, val.data.expiresAt, val.data.roles);
         toast.success('Успешная авторизация');
         router.push('/');
     }, error => {

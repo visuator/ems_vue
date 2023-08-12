@@ -56,7 +56,7 @@ const handleCreateSetting = async () => {
                             <button class="btn btn-primary d-block w-100">Создать</button>
                         </Form>
                         <hr />
-                        <template v-if="settings">
+                        <template v-if="settings?.length">
                             <p>Настройки:</p>
                             <ol class="list-group list-group-numbered overflow-auto" style="max-height: 300px!important">
                                 <li class="list-group-item list-group-item-action d-flex" v-for="s in settings" :key="s.id">

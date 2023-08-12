@@ -23,10 +23,12 @@ watch(router.currentRoute, (val) => {
 const handleImport = async () => {
     const formData = new FormData();
     formData.append('file', selectedFile.value);
-    console.log(selectedImport.value);
     await axios.post(selectedImport.value.url, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
+        },
+        params: {
+            requestedAt: new Date(Date.now()),
         },
         onUploadProgress: (progressEvent) => {
             percentage.value = Math.round((progressEvent.loaded * 100) / progressEvent.total);
