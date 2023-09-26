@@ -405,6 +405,11 @@
   "resolved" "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.3.2.tgz"
   "version" "1.3.2"
 
+"@vitejs/plugin-basic-ssl@^1.0.1":
+  "integrity" "sha512-pcub+YbFtFhaGRTo1832FQHQSHvMrlb43974e2eS8EKleR3p1cDdkJFPci1UhwkEf1J9Bz+wKBSzqpKp7nNj2A=="
+  "resolved" "https://registry.npmjs.org/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-1.0.1.tgz"
+  "version" "1.0.1"
+
 "@vitejs/plugin-vue-jsx@^3.0.1":
   "integrity" "sha512-+Jb7ggL48FSPS1uhPnJbJwWa9Sr90vQ+d0InW+AhBM22n+cfuYqJZDckBc+W3QSHe1WDvewMZfa4wZOtk5pRgw=="
   "resolved" "https://registry.npmjs.org/@vitejs/plugin-vue-jsx/-/plugin-vue-jsx-3.0.1.tgz"
@@ -1548,7 +1553,7 @@
     "@vue/devtools-api" "^6.5.0"
     "type-fest" "^4.0.0"
 
-"vite@^4.0.0", "vite@^4.3.9":
+"vite@^3.0.0 || ^4.0.0", "vite@^4.0.0", "vite@^4.3.9":
   "integrity" "sha512-EY6Mm8vJ++S3D4tNAckaZfw3JwG3wa794Vt70M6cNJ6NxT87yhq7EC8Rcap3ahyHdo8AhCmV9PTk+vG1HiYn1A=="
   "resolved" "https://registry.npmjs.org/vite/-/vite-4.4.6.tgz"
   "version" "4.4.6"

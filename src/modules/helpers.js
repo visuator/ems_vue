@@ -16,6 +16,7 @@ const beautifyDateTime = (d) => {
 
     return `${day}.${month}.${year} ${hours}:${minutes}`;
 };
+const getPersonFullName = (p) => `${p.lastName} ${p.firstName} ${p.middleName}`;
 
 
-export { beautifyDate, beautifyDateTime };
+export { beautifyDate, beautifyDateTime, getPersonFullName };
