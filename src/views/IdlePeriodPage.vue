@@ -3,11 +3,12 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { ref, onMounted } from 'vue'
 import { string } from 'yup'
 import { QueryBuilder } from 'odata-query-builder'
+import { beautifyDate } from '../modules/helpers';
+import { IMPORT_TYPES } from '../constants/import';
 import axios from '../modules/axios';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import toast from '../modules/toast';
-import { beautifyDate } from '../modules/helpers';
-import { IMPORT_TYPES } from '../constants/import';
+import DescribedItem from '../components/DescribedItem.vue';
 
 const isCommon = ref(false);
 
@@ -111,18 +112,9 @@ const handleCreatePeriod = async () => {
                             </Form>
                             <hr />
                             <template v-if="idlePeriods?.length">
-                                <ol class="list-group list-group-numbered overflow-auto"
-                                    style="max-height: 300px!important">
-                                    <li class="list-group-item d-flex" v-for="ip in idlePeriods" :key="ip.id">
-                                        <div>
-                                            <div class="ms-2 fw-bold mb-2">{{ beautifyDate(ip.createdAt) }}</div>
-                                            <div>
-                                                <span class="d-block mb-1">Начало: {{ beautifyDate(ip.startingAt) }}</span>
-                                                <span class="d-block">Конец: {{ beautifyDate(ip.endingAt) }}</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ol>
+                                <div style="max-height: 150px!important;overflow: auto;">
+                                    <DescribedItem v-for="ip in idlePeriods" :key="ip.id" :propertyAccessors="[{name: 'Создан', value: beautifyDate(ip.createdAt)}, {name: 'Начало', value: beautifyDate(ip.startingAt)}, {name: 'Конец', value: beautifyDate(ip.endingAt)}]"></DescribedItem>
+                                </div>
                             </template>
                             <template v-else>
                                 <div class="alert alert-info">Периоды простоя отсутствуют</div>

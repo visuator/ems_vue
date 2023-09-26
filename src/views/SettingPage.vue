@@ -3,9 +3,10 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { onMounted, ref } from 'vue'
 import { string } from 'yup';
 import { QueryBuilder } from 'odata-query-builder';
+import { beautifyDate } from '../modules/helpers';
+import DescribedItem from '../components/DescribedItem.vue';
 import axios from '../modules/axios';
 import toast from '../modules/toast';
-import { beautifyDate } from '../modules/helpers';
 
 const quarters = [
     { id: 1, name: '1-я неделя', value: 0 },
@@ -57,20 +58,12 @@ const handleCreateSetting = async () => {
                         </Form>
                         <hr />
                         <template v-if="settings?.length">
-                            <p>Настройки:</p>
-                            <ol class="list-group list-group-numbered overflow-auto" style="max-height: 300px!important">
-                                <li class="list-group-item list-group-item-action d-flex" v-for="s in settings" :key="s.id">
-                                    <div>
-                                        <div class="ms-2 fw-bold mb-2">
-                                            {{ beautifyDate(s.createdAt) }}
-                                        </div>
-                                        <div>
-                                            <span class="d-block">Квартал: {{ quarters.find(x => x.value ===
-                                                s.currentQuarter).name }}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ol>
+                            <div style="max-height: 150px!important; overflow: auto;">
+                                <DescribedItem v-for="s in settings" :key="s.id" :propertyAccessors="[{ name: 'Создан', value: beautifyDate(s.createdAt) }, {
+                                    name: 'Квартал', value: quarters.find(x => x.value ===
+                                        s.currentQuarter).name
+                                }]"></DescribedItem>
+                            </div>
                         </template>
                         <template v-else>
                             <div class="alert alert-info">Настроек нет</div>

@@ -8,6 +8,7 @@ import { QueryBuilder } from 'odata-query-builder';
 import axios from '../modules/axios';
 import toast from '../modules/toast';
 import GoogleSignIn from '../components/GoogleSignIn.vue';
+import DescribedItem from '../components/DescribedItem.vue';
 
 const userStore = useUserStore();
 const user = computed(() => userStore.user);
@@ -67,22 +68,13 @@ const handleDeleteExternalAccount = async () => {
                     <div class="card-header">Личный кабинет</div>
                     <div class="card-body">
                         <template v-if="externalAccounts?.length">
-                            <p>Привязанные аккаунты:</p>
-                            <ol class="list-group list-group-numbered overflow-auto" style="max-height: 300px!important">
-                                <li class="list-group-item list-group-item-action d-flex" @click="async () => { externalAccount = ea.id; await handleDeleteExternalAccount(); }"
-                                    v-for="ea in externalAccounts" :key="ea.id">
-                                    <div>
-                                        <div class="ms-2 fw-bold mb-2">
-                                            {{ ea.externalEmail }}
-                                            <i class="ms-2 bi"
-                                                :class="EXTERNAL_PROVIDERS[ea.externalAccountProvider].icon"></i>
-                                        </div>
-                                        <div>
-                                            <span class="d-block">Создан: {{ beautifyDate(ea.createdAt) }}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ol>
+                            <div style="max-height: 150px!important overflow: auto;">
+                                <DescribedItem @click="handleDeleteExternalAccount" v-for="ea in externalAccounts" :key="ea.id"
+                                    :property-accessors="[{ name: 'Создан', value: beautifyDate(ea.createdAt) }]">
+                                    <dd><i class="ms-2 bi" :class="EXTERNAL_PROVIDERS[ea.externalAccountProvider].icon"></i>
+                                    </dd>
+                                </DescribedItem>
+                            </div>
                         </template>
                         <template v-else>
                             <div class="alert alert-info">У вас нет привязанных аккаунтов</div>

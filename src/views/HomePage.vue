@@ -1,18 +1,13 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useUserStore } from '../stores/userStore';
-import { EMS_ACCESS_TOKEN, EMS_EXPIRES_AT, EMS_REFRESH_TOKEN, EMS_ROLES } from '../constants/auth';
 import { NAVS_BY_ROLES } from '../constants/navs';
 import axios from '../modules/axios';
 import router from '../router/router';
 
 const userStore = useUserStore();
 const navs = computed(() => {
-    const filteredNavs = NAVS_BY_ROLES.filter(x => x.roles.some(r => userStore.getRoles?.some(sr => sr === r)));
-    if(!filteredNavs){
-        // return ...
-    }
-    return filteredNavs;
+    return NAVS_BY_ROLES.filter(x => x.roles.some(r => userStore.getRoles?.some(sr => sr === r)));
 });
 
 onMounted(async () => {
@@ -22,17 +17,7 @@ onMounted(async () => {
     })
 });
 const handleLogout = () => {
-    userStore.accessToken = null;
-    userStore.refreshToken = null;
-    userStore.expiresAt = null;
-    userStore.roles = null;
-    userStore.user = null;
-
-    localStorage.removeItem(EMS_ACCESS_TOKEN);
-    localStorage.removeItem(EMS_REFRESH_TOKEN);
-    localStorage.removeItem(EMS_EXPIRES_AT);
-    localStorage.removeItem(EMS_ROLES);
-
+    userStore.cleanup();
     router.push('/login');
 }
 </script>

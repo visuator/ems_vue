@@ -12,7 +12,7 @@ onMounted(async () => {
         requestedAt: new Date(Date.now()).toJSON(),
     }).then(val => {
         const userStore = useUserStore();
-
+        
         if (userStore.isLoggedIn) {
             userStore.cleanup();
         }

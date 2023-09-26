@@ -12,29 +12,29 @@ const emit = defineEmits(['update:model-value']);
 const handleSelect = (c) => {
     emit('update:model-value', c.id);
 };
-
-const isActive = (c) => {
-    return props.modelValue ? props.modelValue === c.id : false;
-}
 </script>
 <template>
-    <ol class="list-group list-group-numbered overflow-auto" style="max-height: 300px!important">
-        <li class="d-flex list-group-item list-group-item-action" :class="{ 'active': isActive(c) }" v-for="c in props.classes" :key="c.id"
-            @click="handleSelect(c)">
-            <div>
-                <div class="ms-2 fw-bold mb-2">{{ c.lesson.name }}</div>
-                <div>
-                    <span class="d-block mb-1 badge" :class="`bg-${CLASS_STATUSES[c.status].color}`">{{
-                        CLASS_STATUSES[c.status].name }}</span>
-                    <span class="d-block mb-1">Преподаватель: {{
-                        getPersonFullName(c.lecturer)
-                    }}</span>
-                    <span class="d-block mb-1">Аудитория: {{ c.classroom.name }}</span>
-                    <span class="d-block mb-1">Начало: {{ beautifyDateTime(c.startingAt)
-                    }}</span>
-                    <span class="d-block">Конец: {{ beautifyDateTime(c.endingAt) }}</span>
-                </div>
-            </div>
-        </li>
-    </ol>
+    <template v-for="c in props.classes" :key="c.id">
+        <dl @click="handleSelect(c)">
+            <dt>Предмет</dt>
+            <dd>{{ c.lesson.name }}</dd>
+            <dt>Статус</dt>
+            <dd>
+                <span class="d-block mb-1 badge" :class="`bg-${CLASS_STATUSES[c.status].color}`">{{
+                    CLASS_STATUSES[c.status].name }}</span>
+            </dd>
+            <dt>Преподаватель</dt>
+            <dd>{{
+                getPersonFullName(c.lecturer)
+            }}</dd>
+            <dt>Аудитория</dt>
+            <dd>{{ c.classroom.name }}</dd>
+            <dt>Начало</dt>
+            <dd>{{ beautifyDateTime(c.startingAt)
+            }}</dd>
+            <dt>Конец</dt>
+            <dd>{{ beautifyDateTime(c.endingAt) }}</dd>
+        </dl>
+        <hr />
+    </template>
 </template>
